@@ -82,6 +82,8 @@ app.post('/phonebook/person', (req,res)=>{
         important: body.important || false,
         date: new Date(),
         id: generateID(),
+        name: '',
+        number: '',
     }
    
     phoneBook = phoneBook.concat(person);
