@@ -33,6 +33,16 @@ app.get('/phonebook', (req,res)=>{
     res.send(phoneBook);
 })
 
+app.get('/phonebook/person/:id', (req,res)=>{
+    const id = req.params.id;
+    const person = phoneBook.find(entry => entry.id == id);
+    if (person){
+        res.send(person);
+    } else{
+        res.status(404).end();
+    }
+})
+
 app.get('/info', (req,res)=>{
     const date = new Date();
     const info = `Phonebook has info for ${phoneBook.length} people <br> ${date}`;
