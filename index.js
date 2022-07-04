@@ -50,6 +50,24 @@ app.get('/info', (req,res)=>{
 
 })
 
+app.delete('/phonebook/person/:id', (req,res)=>{
+    const id = req.params.id;
+    const person = phoneBook.filter(entry => entry.id !== id)
+
+    res.status(204).end();
+})
+
+app.post('/phonebook/person', (req,res)=>{
+    const maxId = phoneBook.length > 0 ?
+        Math.max(...phoneBook.map(entry => entry.id)) : 0;
+
+    const person = req.body;
+    res.json(person);
+    person.id = maxId + 1; 
+
+    phoneBook = phoneBook.concat(person);
+})
+
 app.listen(PORT, ()=>{
     console.log(`Success: Listening on PORT ${PORT}`);
 })
