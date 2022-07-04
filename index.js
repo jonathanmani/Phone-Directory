@@ -24,3 +24,22 @@ let phoneBook = [
       "number": "39-23-6423122"
     }
 ]
+
+app.get('/', (req,res)=>{
+    res.send('<h1>Hello World</h1>')
+})
+
+app.get('/phonebook', (req,res)=>{
+    res.send(phoneBook);
+})
+
+app.get('/info', (req,res)=>{
+    const date = new Date();
+    const info = `Phonebook has info for ${phoneBook.length} people <br> ${date}`;
+    res.send(info);
+
+})
+
+app.listen(PORT, ()=>{
+    console.log(`Success: Listening on PORT ${PORT}`);
+})
