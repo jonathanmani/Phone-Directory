@@ -57,14 +57,33 @@ app.delete('/phonebook/person/:id', (req,res)=>{
     res.status(204).end();
 })
 
-app.post('/phonebook/person', (req,res)=>{
+const generateID = () =>{
     const maxId = phoneBook.length > 0 ?
         Math.max(...phoneBook.map(entry => entry.id)) : 0;
+    
+    return maxId + 1; 
+}
 
-    const person = req.body;
-    res.json(person);
-    person.id = maxId + 1; 
+app.post('/phonebook/person', (req,res)=>{
+    const body = req.body;
 
+    if (!body.content){
+        return res.status(404).json({
+            error: 'content is missing'
+        })
+    } else if (!body.name){
+        return res.status(404).json({
+            error: 'Name is missing'
+        })
+    }
+
+    const person = {
+        content: body.content,
+        important: body.important || false,
+        date: new Date(),
+        id: generateID(),
+    }
+   
     phoneBook = phoneBook.concat(person);
 })
 
